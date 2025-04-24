@@ -58,7 +58,8 @@ public class Main {
         upperCase.compose(removeLowerCaseA) // 1st. uppercase 실행
                 .apply(input);              // 2nd. 1st의 실행결과를 파라미터에 넣어 removeLowerCaseA 실행
         // -> "BCD";
-        
+
+        // 2025.04.24 주석처리
     }
 
     HelloWorld helloWorld = name->"hello, "+name+"!";

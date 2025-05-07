@@ -64,6 +64,11 @@ public class Main {
 
     HelloWorld helloWorld = name->"hello, "+name+"!";
 
+    Function<String,Integer> stringTest = str -> str !=null ? str.length() : 0;
+    Integer result = stringTest.apply("Test");
+
+
+
     interface HelloWorld{
         String sayHello(String name);
     }

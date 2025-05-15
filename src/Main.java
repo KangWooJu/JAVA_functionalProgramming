@@ -1,4 +1,6 @@
-import java.util.function.Function;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -44,7 +46,7 @@ public class Main {
         System.out.println(result);
 
 
-         */
+
 
         Function<String,String> removeLowerCaseA = str -> str.replace("a","");
         Function<String,String> upperCase = String::toUpperCase;
@@ -60,13 +62,51 @@ public class Main {
         // -> "BCD";
 
         // 2025.04.24 주석처리
+
+         */
+
+        // 자바의 Stream() 메소드 1.축소 예시 : reduce()
+        List<String> words = Arrays.asList("java", "stream", "reduce", "example");
+        String result = words.stream()
+                .reduce(
+                        "",                                      // identity
+                        (partialResult, word) -> partialResult + word.toUpperCase() + " ", // accumulator
+                        (result1, result2) -> result1 + result2   // combiner
+                );
+
+        System.out.println(result);
+
+        // 자바의 Stream() 메소드 2. 요소수집 : collect()
+        var strings = List.of("a","b","c","d","e");
+
+        // (1) 스트림 컬렉터 - 사용자 정의
+        var joiner = strings.stream()
+                            .collect(Collector.of(() -> new StringJoiner(""), // Suplier<A>를 지정
+                                    StringJoiner::add, // BiConsimer<A,T>를 지정
+                                    StringJoiner::merge, // BinaryOperator<A,T>를 지정
+                                    StringJoiner::toString)); // Function<A,R>
+
+        System.out.println(joiner); // abcde 출력
+
+        // (2) 스트림 컬렉터 - 사전 정의
+        var collectWithCollectors = strings.stream()
+                                           .collect(Collectors.joining());
+
+        System.out.println(collectWithCollectors); // abcde 출력
+
+
+
+
     }
 
+    /*
     HelloWorld helloWorld = name->"hello, "+name+"!";
 
     Function<String,Integer> stringTest = str -> str !=null ? str.length() : 0;
     Integer result = stringTest.apply("Test");
 
+
+     */
 
 
     interface HelloWorld{
@@ -100,8 +140,6 @@ public class Main {
     }
 
      */
-
-
 }
 
 

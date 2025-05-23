@@ -1,6 +1,11 @@
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.*;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.groupingBy;
 
 public class Main {
     public static void main(String[] args) {
@@ -65,6 +70,7 @@ public class Main {
 
          */
 
+        /*
         // 자바의 Stream() 메소드 1.축소 예시 : reduce()
         List<String> words = Arrays.asList("java", "stream", "reduce", "example");
         String result = words.stream()
@@ -94,6 +100,29 @@ public class Main {
 
         System.out.println(collectWithCollectors); // abcde 출력
 
+         */
+
+
+        boolean isTeaTime = LocalDateTime.now()
+                                         .query(temporal->{
+                                             var time = LocalDateTime.from(temporal);
+                                             return time.getHour() >= 16;
+                                         });
+
+        System.out.println(isTeaTime);
+
+        // groupingBy를 이용한 스트림 그룹화
+       Map<String,Set<UUID>> todaysLoginByGroupWithFilterOp =
+               users.stream()
+                       .collect(groupingBy(User::group,
+                               mapping(User::id,toSet())));
+
+       // Filtering을 이용한 스트림 그룹화
+       Map<String,Set<UUID>> todaysLoginByGroupWithFilteringCollector =
+               users.stream()
+                       .collect(groupingBy(User::group,
+                               filtering(loggedInToday, // 그룹화한 요소중 필터링을 통해 특정 요소들만 Set에 저장
+                                       mapping(User::id,toSet()))));
 
 
 
@@ -140,6 +169,8 @@ public class Main {
     }
 
      */
+
+
 }
 
 
